@@ -1,14 +1,20 @@
 package ru.dilgorp.java.stats.game.table.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import ru.dilgorp.java.stats.game.table.domain.auth.Authority;
 
 import java.util.List;
 
+/**
+ * Представляет пользователя.
+ * Содержит доступные права.
+ */
 @Data
 @Document("appUsers")
+@NoArgsConstructor
 public class AppUser {
 
     @Id

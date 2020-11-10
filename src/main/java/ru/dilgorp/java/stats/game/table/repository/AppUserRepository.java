@@ -6,4 +6,5 @@ import ru.dilgorp.java.stats.game.table.domain.AppUser;
 
 @Repository
 public interface AppUserRepository extends MongoRepository<AppUser, String> {
+    AppUser findByUsername(String username);
 }
