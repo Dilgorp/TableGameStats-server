@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/admin").hasAnyAuthority(WRITE_USER.name(), ALL.name())
+                .antMatchers("/users").hasAnyAuthority(WRITE_USER.name(), ALL.name())
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthenticationFilter(authenticationManager(), headerString, secret, tokenPrefix))

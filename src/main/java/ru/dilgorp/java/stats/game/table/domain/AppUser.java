@@ -23,10 +23,4 @@ public class AppUser {
     private String username;
     private String password;
     private List<Authority> authorities;
-
-    public AppUser(String username, String password, List<Authority> authorities) {
-        this.username = username;
-        this.password = password;
-        this.authorities = authorities;
-    }
 }
