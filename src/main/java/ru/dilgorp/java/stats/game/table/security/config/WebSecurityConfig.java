@@ -14,8 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.dilgorp.java.stats.game.table.security.filter.AuthenticationFilter;
 import ru.dilgorp.java.stats.game.table.security.filter.AuthorizationFilter;
 
-import static ru.dilgorp.java.stats.game.table.domain.auth.Authority.ALL;
-import static ru.dilgorp.java.stats.game.table.domain.auth.Authority.WRITE_USER;
+import static ru.dilgorp.java.stats.game.table.domain.auth.Authority.*;
 
 /**
  * Конфигурация авторизации
@@ -45,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers("/users").hasAnyAuthority(WRITE_USER.name(), ALL.name())
+                .antMatchers("/players").hasAnyAuthority(WRITE_PLAYER_INFO.name(), ALL.name())
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthenticationFilter(authenticationManager(), headerString, secret, tokenPrefix))
