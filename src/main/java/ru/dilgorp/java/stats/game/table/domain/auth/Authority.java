@@ -22,5 +22,10 @@ public enum  Authority {
     /**
      * Просмотр информации об  играх
      */
-    READ_GAME_INFO
+    READ_GAME_INFO,
+
+    /**
+     * Редактирование информации об игроках
+     */
+    WRITE_PLAYER_INFO
 }
