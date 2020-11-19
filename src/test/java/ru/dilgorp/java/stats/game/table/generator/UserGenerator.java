@@ -8,6 +8,7 @@ import ru.dilgorp.java.stats.game.table.domain.dto.UserDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Класс, отвечающий за генерацию элементов для тестов
@@ -31,7 +32,7 @@ public class UserGenerator {
         List<AppUser> users = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             AppUser user = new AppUser();
-            user.setId(Integer.toString(i));
+            user.setUuid(UUID.randomUUID());
             user.setUsername(Integer.toString(i));
             user.setPassword(encoder.encode(Integer.toString(i)));
             user.setAuthorities(List.of(authorities[i % authorities.length]));
@@ -45,7 +46,7 @@ public class UserGenerator {
         List<UserDTO> users = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             UserDTO user = new UserDTO();
-            user.setId(Integer.toString(i));
+            user.setUuid(UUID.randomUUID());
             user.setUsername(Integer.toString(i));
             user.setPassword(encoder.encode(Integer.toString(i)));
             user.setAuthorities(List.of(authorities[i % authorities.length]));
@@ -57,7 +58,7 @@ public class UserGenerator {
 
     public UserDTO copy(UserDTO userDTO){
         UserDTO copy = new UserDTO();
-        copy.setId(userDTO.getId());
+        copy.setUuid(userDTO.getUuid());
         copy.setUsername(userDTO.getUsername());
         copy.setPassword(userDTO.getUsername());
         copy.setAuthorities(userDTO.getAuthorities());

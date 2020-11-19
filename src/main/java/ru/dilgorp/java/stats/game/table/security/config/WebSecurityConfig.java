@@ -1,7 +1,7 @@
 package ru.dilgorp.java.stats.game.table.security.config;
 
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,6 +20,7 @@ import static ru.dilgorp.java.stats.game.table.domain.auth.Authority.*;
  * Конфигурация авторизации
  */
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${security.header-string}")
@@ -31,11 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${security.token-prefix}")
     private String tokenPrefix;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     @SneakyThrows
@@ -45,6 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers("/users").hasAnyAuthority(WRITE_USER.name(), ALL.name())
                 .antMatchers("/players").hasAnyAuthority(WRITE_PLAYER_INFO.name(), ALL.name())
+                .antMatchers("/info").hasAnyAuthority(READ_GAME_INFO.name(), ALL.name())
+                .antMatchers("/edit").hasAnyAuthority(WRITE_GAME_INFO.name(), ALL.name())
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthenticationFilter(authenticationManager(), headerString, secret, tokenPrefix))

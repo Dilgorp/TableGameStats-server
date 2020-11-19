@@ -11,11 +11,11 @@ import ru.dilgorp.java.stats.game.table.domain.Player;
 import ru.dilgorp.java.stats.game.table.generator.PlayerGenerator;
 import ru.dilgorp.java.stats.game.table.repository.PlayerRepository;
 import ru.dilgorp.java.stats.game.table.response.Response;
-import ru.dilgorp.java.stats.game.table.response.ResponseType;
 
 import java.util.List;
+import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.dilgorp.java.stats.game.table.response.ResponseType.ERROR;
 import static ru.dilgorp.java.stats.game.table.response.ResponseType.SUCCESS;
 
@@ -118,7 +118,7 @@ class PlayerControllerTest {
         );
 
         // when
-        Response<Player> gettingResponse = playerController.getPlayer(player.getId());
+        Response<Player> gettingResponse = playerController.getPlayer(player.getUuid());
 
         // then
         assertEquals(givenResponse, gettingResponse);
@@ -130,15 +130,15 @@ class PlayerControllerTest {
     @Test
     public void getPlayerError(){
         // given
-        String id = "id";
+        UUID uuid = UUID.randomUUID();
         Response<Player> givenResponse = new Response<>(
                 ERROR,
-                String.format("Игрок с идентификатором '%s' не найден", id),
+                String.format("Игрок с идентификатором '%s' не найден", uuid),
                 null
         );
 
         // when
-        Response<Player> gettingResponse = playerController.getPlayer(id);
+        Response<Player> gettingResponse = playerController.getPlayer(uuid);
 
         // then
         assertEquals(givenResponse, gettingResponse);
@@ -171,7 +171,7 @@ class PlayerControllerTest {
         Player player = playerGenerator.generate(1).get(0);
         Response<Player> givenResponse = new Response<>(
                 ERROR,
-                String.format("Игрок с идентификатором '%s' не найден", player.getId()),
+                String.format("Игрок с идентификатором '%s' не найден", player.getUuid()),
                 null
         );
 
@@ -193,7 +193,7 @@ class PlayerControllerTest {
         Response<Player> givenResponse = new Response<>(SUCCESS, null, null);
 
         // when
-        Response<Player> gettingResponse = playerController.deleteUser(player.getId());
+        Response<Player> gettingResponse = playerController.deleteUser(player.getUuid());
 
         // then
         assertEquals(givenResponse, gettingResponse);
@@ -205,15 +205,15 @@ class PlayerControllerTest {
     @Test
     public void deletePlayerError(){
         // given
-        String id = "id";
+        UUID uuid = UUID.randomUUID();
         Response<Player> givenResponse = new Response<>(
                 ERROR,
-                String.format("Игрок с идентификатором '%s' не найден", id),
+                String.format("Игрок с идентификатором '%s' не найден", uuid),
                 null
         );
 
         // when
-        Response<Player> gettingResponse = playerController.deleteUser(id);
+        Response<Player> gettingResponse = playerController.deleteUser(uuid);
 
         // then
         assertEquals(givenResponse, gettingResponse);

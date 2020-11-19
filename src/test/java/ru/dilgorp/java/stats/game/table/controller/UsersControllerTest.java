@@ -17,6 +17,7 @@ import ru.dilgorp.java.stats.game.table.response.Response;
 import ru.dilgorp.java.stats.game.table.response.ResponseType;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.dilgorp.java.stats.game.table.response.ResponseType.ERROR;
@@ -133,7 +134,7 @@ class UsersControllerTest {
         );
 
         // when
-        Response<UserDTO> gettingResponse = usersController.getUser(givenUser.getId());
+        Response<UserDTO> gettingResponse = usersController.getUser(givenUser.getUuid());
 
         // then
         assertEquals(givenResponse, gettingResponse);
@@ -145,15 +146,15 @@ class UsersControllerTest {
     @Test
     public void getUserError(){
         // given
-        String id = "NotExistId";
+        UUID uuid = UUID.randomUUID();
         Response<UserDTO> givenResponse = new Response<>(
                 ERROR,
-                String.format("Пользователь не найден по идентификатору '%s'", id),
+                String.format("Пользователь не найден по идентификатору '%s'", uuid),
                 null
         );
 
         // when
-        Response<UserDTO> gettingResponse = usersController.getUser(id);
+        Response<UserDTO> gettingResponse = usersController.getUser(uuid);
 
         // then
         assertEquals(givenResponse, gettingResponse);
@@ -191,7 +192,7 @@ class UsersControllerTest {
         UserDTO givenUser = userGenerator.generateDTO(1).get(0);
         Response<UserDTO> givenResponse = new Response<>(
                 ERROR,
-                String.format("Пользователь не найден по идентификатору '%s'", givenUser.getId()),
+                String.format("Пользователь не найден по идентификатору '%s'", givenUser.getUuid()),
                 null
         );
 
@@ -213,7 +214,7 @@ class UsersControllerTest {
         Response<UserDTO> givenResponse = new Response<>(SUCCESS, null, null);
 
         // when
-        Response<UserDTO> gettingResponse = usersController.deleteUser(givenUser.getId());
+        Response<UserDTO> gettingResponse = usersController.deleteUser(givenUser.getUuid());
 
         // then
         assertEquals(givenResponse, gettingResponse);
@@ -228,12 +229,12 @@ class UsersControllerTest {
         AppUser givenUser = userGenerator.generate(1).get(0);
         Response<UserDTO> givenResponse = new Response<>(
                 ERROR,
-                String.format("Пользователь не найден по идентификатору '%s'", givenUser.getId()),
+                String.format("Пользователь не найден по идентификатору '%s'", givenUser.getUuid()),
                 null
         );
 
         // when
-        Response<UserDTO> gettingResponse = usersController.deleteUser(givenUser.getId());
+        Response<UserDTO> gettingResponse = usersController.deleteUser(givenUser.getUuid());
 
         // then
         assertEquals(givenResponse, gettingResponse);
