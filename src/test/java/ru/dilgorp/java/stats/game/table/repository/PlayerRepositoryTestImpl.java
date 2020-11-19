@@ -6,14 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import ru.dilgorp.java.stats.game.table.domain.Player;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @SuppressWarnings("unchecked")
 public class PlayerRepositoryTestImpl implements PlayerRepository{
-    private Map<String, Player> players = new LinkedHashMap<>();
+    private final Map<UUID, Player> players = new LinkedHashMap<>();
 
     @Override
     public Player findByName(String name) {
@@ -25,27 +22,52 @@ public class PlayerRepositoryTestImpl implements PlayerRepository{
 
     @Override
     public <S extends Player> S save(S entity) {
-        if(entity.getId() == null){
-            entity.setId("id");
+        if(entity.getUuid() == null){
+            entity.setUuid(UUID.randomUUID());
         }
 
-        players.put(entity.getId(), entity);
-        return (S) players.get(entity.getId());
+        players.put(entity.getUuid(), entity);
+        return (S) players.get(entity.getUuid());
     }
 
     @Override
     public <S extends Player> List<S> saveAll(Iterable<S> entities) {
-        entities.forEach(s -> players.put(s.getId(), s));
+        entities.forEach(s -> players.put(s.getUuid(), s));
         return (List<S>) List.copyOf(players.values());
     }
 
     @Override
-    public Optional<Player> findById(String s) {
+    public void flush() {
+
+    }
+
+    @Override
+    public <S extends Player> S saveAndFlush(S entity) {
+        return null;
+    }
+
+    @Override
+    public void deleteInBatch(Iterable<Player> entities) {
+
+    }
+
+    @Override
+    public void deleteAllInBatch() {
+
+    }
+
+    @Override
+    public Player getOne(UUID s) {
+        return null;
+    }
+
+    @Override
+    public Optional<Player> findById(UUID s) {
         return Optional.ofNullable(players.get(s));
     }
 
     @Override
-    public boolean existsById(String s) {
+    public boolean existsById(UUID s) {
         return false;
     }
 
@@ -54,10 +76,6 @@ public class PlayerRepositoryTestImpl implements PlayerRepository{
         return List.copyOf(players.values());
     }
 
-    @Override
-    public Iterable<Player> findAllById(Iterable<String> strings) {
-        return null;
-    }
 
     @Override
     public long count() {
@@ -65,13 +83,13 @@ public class PlayerRepositoryTestImpl implements PlayerRepository{
     }
 
     @Override
-    public void deleteById(String s) {
-
+    public void deleteById(UUID s) {
+        players.remove(s);
     }
 
     @Override
     public void delete(Player entity) {
-        players.remove(entity.getId());
+        players.remove(entity.getUuid());
     }
 
     @Override
@@ -90,17 +108,12 @@ public class PlayerRepositoryTestImpl implements PlayerRepository{
     }
 
     @Override
+    public List<Player> findAllById(Iterable<UUID> strings) {
+        return null;
+    }
+
+    @Override
     public Page<Player> findAll(Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public <S extends Player> S insert(S entity) {
-        return null;
-    }
-
-    @Override
-    public <S extends Player> List<S> insert(Iterable<S> entities) {
         return null;
     }
 

@@ -8,6 +8,7 @@ import ru.dilgorp.java.stats.game.table.response.Response;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static ru.dilgorp.java.stats.game.table.response.ResponseType.ERROR;
 import static ru.dilgorp.java.stats.game.table.response.ResponseType.SUCCESS;
@@ -59,17 +60,17 @@ public class PlayerController {
      * Возвращает игрока по идентификатору.
      * Если игрок не найден, возвращает ошибку
      *
-     * @param id идентификатор пользователя
+     * @param uuid идентификатор пользователя
      * @return ответ, содержащий данные об игроке,
      * SUCCESS - в случае успешного выполнения, ERROR - в случае ошибки
      */
     @GetMapping("/{id}")
-    public Response<Player> getPlayer(@PathVariable("id") final String id) {
-        Optional<Player> byId = playerRepository.findById(id);
+    public Response<Player> getPlayer(@PathVariable("id") final UUID uuid) {
+        Optional<Player> byId = playerRepository.findById(uuid);
         return byId.map(player -> new Response<>(SUCCESS, null, player))
                 .orElseGet(() -> new Response<>(
                         ERROR,
-                        String.format("Игрок с идентификатором '%s' не найден", id),
+                        String.format("Игрок с идентификатором '%s' не найден", uuid),
                         null
                 ));
     }
@@ -84,11 +85,11 @@ public class PlayerController {
      */
     @PutMapping
     public Response<Player> putPlayer(@RequestBody final Player player) {
-        Optional<Player> byId = playerRepository.findById(player.getId());
+        Optional<Player> byId = playerRepository.findById(player.getUuid());
         return byId.map(playerDB -> new Response<>(SUCCESS, null, playerRepository.save(player)))
                 .orElseGet(() -> new Response<>(
                         ERROR,
-                        String.format("Игрок с идентификатором '%s' не найден", player.getId()),
+                        String.format("Игрок с идентификатором '%s' не найден", player.getUuid()),
                         null
                 ));
     }
@@ -97,13 +98,13 @@ public class PlayerController {
      * Удаляет игрока по идентификатору.
      * Если игрок не найден. Возвращает ошибку
      *
-     * @param id идентификатор игрока
+     * @param uuid идентификатор игрока
      * @return ответ, содержащий данные об игроке,
      * SUCCESS - в случае успешного выполнения, ERROR - в случае ошибки
      */
-    @DeleteMapping("/{id}")
-    public Response<Player> deleteUser(@PathVariable("id") String id) {
-        Optional<Player> byId = playerRepository.findById(id);
+    @DeleteMapping("/{uuid}")
+    public Response<Player> deleteUser(@PathVariable("uuid") UUID uuid) {
+        Optional<Player> byId = playerRepository.findById(uuid);
 
         Response<Player> response;
         if (byId.isPresent()) {
@@ -112,7 +113,7 @@ public class PlayerController {
         } else {
             response = new Response<>(
                     ERROR,
-                    String.format("Игрок с идентификатором '%s' не найден", id),
+                    String.format("Игрок с идентификатором '%s' не найден", uuid),
                     null
             );
         }

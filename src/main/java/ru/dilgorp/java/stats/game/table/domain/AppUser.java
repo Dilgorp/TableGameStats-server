@@ -2,25 +2,30 @@ package ru.dilgorp.java.stats.game.table.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import ru.dilgorp.java.stats.game.table.domain.auth.Authority;
 
+import javax.persistence.*;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Представляет пользователя.
  * Содержит доступные права.
  */
 @Data
-@Document("appUsers")
+@Entity(name = "appUsers")
 @NoArgsConstructor
 public class AppUser {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID uuid;
 
     private String username;
     private String password;
+
+    @ElementCollection(targetClass = Authority.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_uuid"))
+    @Enumerated(EnumType.STRING)
     private List<Authority> authorities;
 }

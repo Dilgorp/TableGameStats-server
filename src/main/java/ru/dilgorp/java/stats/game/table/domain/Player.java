@@ -2,16 +2,21 @@ package ru.dilgorp.java.stats.game.table.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-@Document("players")
+@Entity(name = "players")
 public class Player {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID uuid;
 
     private String name;
 }

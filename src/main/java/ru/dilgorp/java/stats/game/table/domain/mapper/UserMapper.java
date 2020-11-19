@@ -25,14 +25,14 @@ public class UserMapper implements Mapper<AppUser, UserDTO> {
      */
     @Override
     public AppUser toDocument(UserDTO transferObject) {
-        if (transferObject.getId() == null) {
+        if (transferObject.getUuid() == null) {
             return newAppUser(transferObject);
         }
 
-        Optional<AppUser> byId = appUserRepository.findById(transferObject.getId());
+        Optional<AppUser> byId = appUserRepository.findById(transferObject.getUuid());
         return byId.map(appUser -> {
             AppUser newAppUser = new AppUser();
-            newAppUser.setId(appUser.getId());
+            newAppUser.setUuid(appUser.getUuid());
             newAppUser.setPassword(encoder.encode(transferObject.getPassword()));
             newAppUser.setUsername(transferObject.getUsername());
             newAppUser.setAuthorities(transferObject.getAuthorities());
@@ -49,7 +49,7 @@ public class UserMapper implements Mapper<AppUser, UserDTO> {
     @Override
     public UserDTO toTransferObject(AppUser document) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setId(document.getId());
+        userDTO.setUuid(document.getUuid());
         userDTO.setUsername(document.getUsername());
         userDTO.setAuthorities(document.getAuthorities());
         return userDTO;
@@ -57,7 +57,7 @@ public class UserMapper implements Mapper<AppUser, UserDTO> {
 
     private AppUser newAppUser(UserDTO transferObject) {
         AppUser appUser = new AppUser();
-        appUser.setId(transferObject.getId());
+        appUser.setUuid(transferObject.getUuid());
         appUser.setUsername(transferObject.getUsername());
         appUser.setPassword(encoder.encode(transferObject.getPassword()));
         appUser.setAuthorities(transferObject.getAuthorities());

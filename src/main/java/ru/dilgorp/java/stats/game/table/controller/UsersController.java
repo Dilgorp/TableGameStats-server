@@ -11,6 +11,7 @@ import ru.dilgorp.java.stats.game.table.response.ResponseType;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Контроллер, обеспечиваюющий работу с пользователями
@@ -66,13 +67,13 @@ public class UsersController {
     /**
      * Возвращает пользователя по переданному идентификатору
      *
-     * @param id идентификатор пользователя
+     * @param uuid идентификатор пользователя
      * @return Ответ, содержащий данные потзователя
      * SUCCESS - в случае успешного выполнения, ERROR - если произошла ошибка
      */
-    @GetMapping("/{id}")
-    public Response<UserDTO> getUser(@PathVariable("id") final String id) {
-        Optional<AppUser> byId = appUserRepository.findById(id);
+    @GetMapping("/{uuid}")
+    public Response<UserDTO> getUser(@PathVariable("uuid") final UUID uuid) {
+        Optional<AppUser> byId = appUserRepository.findById(uuid);
 
         return byId.map(appUser -> new Response<>(
                 ResponseType.SUCCESS,
@@ -80,7 +81,7 @@ public class UsersController {
                 mapper.toTransferObject(appUser)
         )).orElseGet(() -> new Response<>(
                 ResponseType.ERROR,
-                String.format("Пользователь не найден по идентификатору '%s'", id),
+                String.format("Пользователь не найден по идентификатору '%s'", uuid),
                 null
         ));
     }
@@ -95,7 +96,7 @@ public class UsersController {
      */
     @PutMapping
     public Response<UserDTO> putUser(@RequestBody final UserDTO user) {
-        Optional<AppUser> byId = appUserRepository.findById(user.getId());
+        Optional<AppUser> byId = appUserRepository.findById(user.getUuid());
 
         return byId.map(appUser -> new Response<>(
                 ResponseType.SUCCESS,
@@ -103,7 +104,7 @@ public class UsersController {
                 mapper.toTransferObject(appUserRepository.save(mapper.toDocument(user)))
         )).orElseGet(() -> new Response<>(
                 ResponseType.ERROR,
-                String.format("Пользователь не найден по идентификатору '%s'", user.getId()),
+                String.format("Пользователь не найден по идентификатору '%s'", user.getUuid()),
                 null
         ));
     }
@@ -112,21 +113,21 @@ public class UsersController {
      * Удаляет пользователя из системы.
      * Если пользователь не найден, возвращает ошибку
      *
-     * @param id идентификатор пользователя
+     * @param uuid идентификатор пользователя
      * @return Ответ, SUCCESS - в случае успешного выполнения, ERROR - если произошла ошибка
      */
-    @DeleteMapping("/{id}")
-    public Response<UserDTO> deleteUser(@PathVariable("id") final String id) {
-        Optional<AppUser> byId = appUserRepository.findById(id);
+    @DeleteMapping("/{uuid}")
+    public Response<UserDTO> deleteUser(@PathVariable("uuid") final UUID uuid) {
+        Optional<AppUser> byId = appUserRepository.findById(uuid);
 
         Response<UserDTO> response;
         if (byId.isPresent()) {
-            appUserRepository.deleteById(id);
+            appUserRepository.deleteById(uuid);
             response = new Response<>(ResponseType.SUCCESS, null, null);
         } else {
             response = new Response<>(
                     ResponseType.ERROR,
-                    String.format("Пользователь не найден по идентификатору '%s'", id),
+                    String.format("Пользователь не найден по идентификатору '%s'", uuid),
                     null
             );
         }

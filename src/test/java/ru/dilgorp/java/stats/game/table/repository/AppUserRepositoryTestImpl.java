@@ -6,14 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import ru.dilgorp.java.stats.game.table.domain.AppUser;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @SuppressWarnings("unchecked")
 public class AppUserRepositoryTestImpl implements AppUserRepository {
-    private final Map<String, AppUser> users = new LinkedHashMap<>();
+    private final Map<UUID, AppUser> users = new LinkedHashMap<>();
 
     @Override
     public AppUser findByUsername(String username) {
@@ -25,26 +22,51 @@ public class AppUserRepositoryTestImpl implements AppUserRepository {
 
     @Override
     public <S extends AppUser> S save(S entity) {
-        if (entity.getId() == null) {
-            entity.setId("id");
+        if (entity.getUuid() == null) {
+            entity.setUuid(UUID.randomUUID());
         }
-        users.put(entity.getId(), entity);
-        return (S) users.get(entity.getId());
+        users.put(entity.getUuid(), entity);
+        return (S) users.get(entity.getUuid());
     }
 
     @Override
     public <S extends AppUser> List<S> saveAll(Iterable<S> entities) {
-        entities.forEach(e -> users.put(e.getId(), e));
+        entities.forEach(e -> users.put(e.getUuid(), e));
         return (List<S>) List.copyOf(users.values());
     }
 
     @Override
-    public Optional<AppUser> findById(String s) {
+    public void flush() {
+
+    }
+
+    @Override
+    public <S extends AppUser> S saveAndFlush(S entity) {
+        return null;
+    }
+
+    @Override
+    public void deleteInBatch(Iterable<AppUser> entities) {
+
+    }
+
+    @Override
+    public void deleteAllInBatch() {
+
+    }
+
+    @Override
+    public AppUser getOne(UUID s) {
+        return null;
+    }
+
+    @Override
+    public Optional<AppUser> findById(UUID s) {
         return Optional.ofNullable(users.get(s));
     }
 
     @Override
-    public boolean existsById(String s) {
+    public boolean existsById(UUID s) {
         return false;
     }
 
@@ -54,17 +76,12 @@ public class AppUserRepositoryTestImpl implements AppUserRepository {
     }
 
     @Override
-    public Iterable<AppUser> findAllById(Iterable<String> strings) {
-        return null;
-    }
-
-    @Override
     public long count() {
         return 0;
     }
 
     @Override
-    public void deleteById(String s) {
+    public void deleteById(UUID s) {
         users.remove(s);
     }
 
@@ -89,17 +106,12 @@ public class AppUserRepositoryTestImpl implements AppUserRepository {
     }
 
     @Override
+    public List<AppUser> findAllById(Iterable<UUID> strings) {
+        return null;
+    }
+
+    @Override
     public Page<AppUser> findAll(Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public <S extends AppUser> S insert(S entity) {
-        return null;
-    }
-
-    @Override
-    public <S extends AppUser> List<S> insert(Iterable<S> entities) {
         return null;
     }
 
