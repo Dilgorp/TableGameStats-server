@@ -1,10 +1,9 @@
-package ru.dilgorp.java.stats.game.table.bom.domain;
+package ru.dilgorp.java.stats.game.table.bom.domain.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.dilgorp.java.stats.game.table.domain.Player;
 
-import javax.persistence.*;
 import java.util.UUID;
 
 /**
@@ -12,13 +11,11 @@ import java.util.UUID;
  */
 @Data
 @NoArgsConstructor
-@Entity(name = "bom_magician")
 public class Magician{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
-
-    @OneToOne
-    @JoinColumn(name = "player_uuid", referencedColumnName = "uuid")
     private Player player;
+
+    public Magician(Player player) {
+        this.player = player;
+    }
 }

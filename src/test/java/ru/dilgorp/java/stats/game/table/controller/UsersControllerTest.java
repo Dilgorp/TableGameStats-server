@@ -67,7 +67,7 @@ class UsersControllerTest {
         Response<Collection<UserDTO>> givenResponse = new Response<>(
                 SUCCESS,
                 null,
-                mapper.documentsToTransferObject(givenUsers)
+                mapper.entitiesToModels(givenUsers)
         );
 
         // when
@@ -87,7 +87,7 @@ class UsersControllerTest {
         Response<UserDTO> givenResponse = new Response<>(
                 SUCCESS,
                 null,
-                mapper.toTransferObject(mapper.toDocument(givenUser))
+                mapper.toModel(mapper.toEntity(givenUser))
         );
 
         // when
@@ -104,7 +104,7 @@ class UsersControllerTest {
     public void postUserError(){
         // given
         UserDTO givenUser = userGenerator.generateDTO(1).get(0);
-        AppUser givenAppUser = mapper.toDocument(givenUser);
+        AppUser givenAppUser = mapper.toEntity(givenUser);
         appUserRepository.save(givenAppUser);
         Response<UserDTO> givenResponse = new Response<>(
                 ResponseType.ERROR,
@@ -130,7 +130,7 @@ class UsersControllerTest {
         Response<UserDTO> givenResponse = new Response<>(
                 SUCCESS,
                 null,
-                mapper.toTransferObject(givenUser)
+                mapper.toModel(givenUser)
         );
 
         // when
@@ -167,13 +167,13 @@ class UsersControllerTest {
     public void putUserIsCorrect(){
         // given
         UserDTO givenUser = userGenerator.generateDTO(1).get(0);
-        AppUser givenAppUser = mapper.toDocument(givenUser);
+        AppUser givenAppUser = mapper.toEntity(givenUser);
         appUserRepository.save(givenAppUser);
         givenAppUser.setUsername("new Username");
         Response<UserDTO> givenResponse = new Response<>(
                 SUCCESS,
                 null,
-                mapper.toTransferObject(mapper.toDocument(givenUser))
+                mapper.toModel(mapper.toEntity(givenUser))
         );
 
         // when

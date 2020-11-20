@@ -5,13 +5,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.dilgorp.java.stats.game.table.bom.domain.Game;
-import ru.dilgorp.java.stats.game.table.bom.domain.StatisticRow;
+import ru.dilgorp.java.stats.game.table.bom.domain.model.Game;
+import ru.dilgorp.java.stats.game.table.bom.domain.model.StatisticRow;
 import ru.dilgorp.java.stats.game.table.bom.manager.StatisticManager;
-import ru.dilgorp.java.stats.game.table.bom.repository.GameRepository;
+import ru.dilgorp.java.stats.game.table.dao.Dao;
 import ru.dilgorp.java.stats.game.table.response.Response;
 
 import java.util.List;
+import java.util.UUID;
 
 import static ru.dilgorp.java.stats.game.table.response.ResponseType.SUCCESS;
 
@@ -23,7 +24,7 @@ import static ru.dilgorp.java.stats.game.table.response.ResponseType.SUCCESS;
 @RequiredArgsConstructor
 public class GameInfoController {
 
-    private final GameRepository gameRepository;
+    private final Dao<Game, UUID> gameDao;
     private final StatisticManager statisticManager;
 
     /**
@@ -33,7 +34,7 @@ public class GameInfoController {
      */
     @GetMapping
     public Response<List<Game>> getGames() {
-        return new Response<>(SUCCESS, null, gameRepository.findAll());
+        return new Response<>(SUCCESS, null, gameDao.findAll());
     }
 
     /**

@@ -10,6 +10,9 @@ import ru.dilgorp.java.stats.game.table.repository.AppUserRepository;
 
 import java.util.Optional;
 
+/**
+ * Отвечает за преобразование пользователей
+ */
 @Component
 @Qualifier("UserMapper")
 @RequiredArgsConstructor
@@ -20,38 +23,38 @@ public class UserMapper implements Mapper<AppUser, UserDTO> {
     /**
      * Преобразовывает {@link UserDTO} в {@link AppUser}
      *
-     * @param transferObject {@link UserDTO}, пользователь передаваемый клиенту (получаемый от клиента)
+     * @param model {@link UserDTO}, пользователь передаваемый клиенту (получаемый от клиента)
      * @return {@link AppUser}, пользователь системы
      */
     @Override
-    public AppUser toDocument(UserDTO transferObject) {
-        if (transferObject.getUuid() == null) {
-            return newAppUser(transferObject);
+    public AppUser toEntity(UserDTO model) {
+        if (model.getUuid() == null) {
+            return newAppUser(model);
         }
 
-        Optional<AppUser> byId = appUserRepository.findById(transferObject.getUuid());
+        Optional<AppUser> byId = appUserRepository.findById(model.getUuid());
         return byId.map(appUser -> {
             AppUser newAppUser = new AppUser();
             newAppUser.setUuid(appUser.getUuid());
-            newAppUser.setPassword(encoder.encode(transferObject.getPassword()));
-            newAppUser.setUsername(transferObject.getUsername());
-            newAppUser.setAuthorities(transferObject.getAuthorities());
+            newAppUser.setPassword(encoder.encode(model.getPassword()));
+            newAppUser.setUsername(model.getUsername());
+            newAppUser.setAuthorities(model.getAuthorities());
             return newAppUser;
-        }).orElseGet(() -> newAppUser(transferObject));
+        }).orElseGet(() -> newAppUser(model));
     }
 
     /**
      * Преобразовывет {@link AppUser} в {@link UserDTO}
      *
-     * @param document {@link AppUser}, пользователь системы
+     * @param entity {@link AppUser}, пользователь системы
      * @return {@link UserDTO}, пользователь передаваемый клиенту (получаемый от клиента)
      */
     @Override
-    public UserDTO toTransferObject(AppUser document) {
+    public UserDTO toModel(AppUser entity) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setUuid(document.getUuid());
-        userDTO.setUsername(document.getUsername());
-        userDTO.setAuthorities(document.getAuthorities());
+        userDTO.setUuid(entity.getUuid());
+        userDTO.setUsername(entity.getUsername());
+        userDTO.setAuthorities(entity.getAuthorities());
         return userDTO;
     }
 
