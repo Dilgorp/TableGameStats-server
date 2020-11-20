@@ -34,7 +34,7 @@ public class UsersController {
         return new Response<>(
                 ResponseType.SUCCESS,
                 null,
-                mapper.documentsToTransferObject(appUserRepository.findAll())
+                mapper.entitiesToModels(appUserRepository.findAll())
         );
     }
 
@@ -60,7 +60,7 @@ public class UsersController {
         return new Response<>(
                 ResponseType.SUCCESS,
                 null,
-                mapper.toTransferObject(appUserRepository.save(mapper.toDocument(user)))
+                mapper.toModel(appUserRepository.save(mapper.toEntity(user)))
         );
     }
 
@@ -78,7 +78,7 @@ public class UsersController {
         return byId.map(appUser -> new Response<>(
                 ResponseType.SUCCESS,
                 null,
-                mapper.toTransferObject(appUser)
+                mapper.toModel(appUser)
         )).orElseGet(() -> new Response<>(
                 ResponseType.ERROR,
                 String.format("Пользователь не найден по идентификатору '%s'", uuid),
@@ -101,7 +101,7 @@ public class UsersController {
         return byId.map(appUser -> new Response<>(
                 ResponseType.SUCCESS,
                 null,
-                mapper.toTransferObject(appUserRepository.save(mapper.toDocument(user)))
+                mapper.toModel(appUserRepository.save(mapper.toEntity(user)))
         )).orElseGet(() -> new Response<>(
                 ResponseType.ERROR,
                 String.format("Пользователь не найден по идентификатору '%s'", user.getUuid()),

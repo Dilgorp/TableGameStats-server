@@ -1,6 +1,6 @@
 package ru.dilgorp.java.stats.game.table.bom.manager;
 
-import ru.dilgorp.java.stats.game.table.bom.domain.StatisticRow;
+import ru.dilgorp.java.stats.game.table.bom.domain.model.StatisticRow;
 
 import java.util.List;
 

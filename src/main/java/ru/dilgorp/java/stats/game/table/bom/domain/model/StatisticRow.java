@@ -1,4 +1,4 @@
-package ru.dilgorp.java.stats.game.table.bom.domain;
+package ru.dilgorp.java.stats.game.table.bom.domain.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

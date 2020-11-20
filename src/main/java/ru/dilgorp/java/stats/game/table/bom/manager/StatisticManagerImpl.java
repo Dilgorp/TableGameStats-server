@@ -2,16 +2,10 @@ package ru.dilgorp.java.stats.game.table.bom.manager;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.dilgorp.java.stats.game.table.bom.domain.Game;
-import ru.dilgorp.java.stats.game.table.bom.domain.Magician;
-import ru.dilgorp.java.stats.game.table.bom.domain.StatisticRow;
+import ru.dilgorp.java.stats.game.table.bom.domain.model.StatisticRow;
 import ru.dilgorp.java.stats.game.table.bom.repository.GameRepository;
-import ru.dilgorp.java.stats.game.table.domain.Player;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * Реализация менеджера, отвечающего за формирование статистики
