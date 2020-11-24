@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import ru.dilgorp.java.stats.game.table.config.GeneratorsConfig;
 import ru.dilgorp.java.stats.game.table.config.RepositoriesConfig;
 import ru.dilgorp.java.stats.game.table.config.TestConfig;
 import ru.dilgorp.java.stats.game.table.domain.Player;
@@ -22,7 +23,7 @@ import static ru.dilgorp.java.stats.game.table.response.ResponseType.SUCCESS;
 /**
  * Класс для тестирования {@link PlayerController}
  */
-@SpringJUnitConfig({RepositoriesConfig.class, TestConfig.class})
+@SpringJUnitConfig({TestConfig.class, RepositoriesConfig.class, GeneratorsConfig.class})
 class PlayerControllerTest {
 
     @Autowired
@@ -34,12 +35,12 @@ class PlayerControllerTest {
     private PlayerController playerController;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         playerController = new PlayerController(playerRepository);
     }
 
     @AfterEach
-    void tearDown(){
+    void tearDown() {
         playerRepository.deleteAll();
     }
 
@@ -47,7 +48,7 @@ class PlayerControllerTest {
      * Проверяем, что возвращается корректный список игроков
      */
     @Test
-    public void getPlayersIsCorrect(){
+    public void getPlayersIsCorrect() {
         // given
         List<Player> givenPlayers = playerGenerator.generate(3);
         playerRepository.saveAll(givenPlayers);
@@ -68,7 +69,7 @@ class PlayerControllerTest {
      * Проверяем, что игрок добавляется корректно
      */
     @Test
-    public void postPlayerIsCorrect(){
+    public void postPlayerIsCorrect() {
         // given
         Player player = playerGenerator.generate(1).get(0);
         Response<Player> givenResponse = new Response<>(
@@ -86,7 +87,7 @@ class PlayerControllerTest {
      * Проверяем, что при попытке добавить пользователя с именем, которое есть в базу, возникает ошибка
      */
     @Test
-    public void postPlayerError(){
+    public void postPlayerError() {
         // given
         Player player = playerGenerator.generate(1).get(0);
         playerRepository.save(playerGenerator.copyOf(player));
@@ -107,7 +108,7 @@ class PlayerControllerTest {
      * Проверяем, что возвращается корректный игрок
      */
     @Test
-    public void getPlayerIsCorrect(){
+    public void getPlayerIsCorrect() {
         // given
         Player player = playerGenerator.generate(1).get(0);
         playerRepository.save(playerGenerator.copyOf(player));
@@ -128,7 +129,7 @@ class PlayerControllerTest {
      * Проверяем, что при попытке получить несуществующего игрока, возвращается ошибка
      */
     @Test
-    public void getPlayerError(){
+    public void getPlayerError() {
         // given
         UUID uuid = UUID.randomUUID();
         Response<Player> givenResponse = new Response<>(
@@ -148,7 +149,7 @@ class PlayerControllerTest {
      * Проверяем, что данные игрока обновляются корректно
      */
     @Test
-    public void putPlayerIsCorrect(){
+    public void putPlayerIsCorrect() {
         // given
         Player player = playerGenerator.generate(1).get(0);
         playerRepository.save(playerGenerator.copyOf(player));
@@ -166,7 +167,7 @@ class PlayerControllerTest {
      * Проверяем, что при попытке обновить данные несуществующего игрока, возникает ошибка
      */
     @Test
-    public void putPlayerError(){
+    public void putPlayerError() {
         // given
         Player player = playerGenerator.generate(1).get(0);
         Response<Player> givenResponse = new Response<>(
@@ -186,7 +187,7 @@ class PlayerControllerTest {
      * Проверяем корректность удаления игрока
      */
     @Test
-    public void deletePlayerIsCorrect(){
+    public void deletePlayerIsCorrect() {
         // given
         Player player = playerGenerator.generate(1).get(0);
         playerRepository.save(player);
@@ -203,7 +204,7 @@ class PlayerControllerTest {
      * Проверяем, что при попытке удалить несуществующего игрока, возникает ошибка
      */
     @Test
-    public void deletePlayerError(){
+    public void deletePlayerError() {
         // given
         UUID uuid = UUID.randomUUID();
         Response<Player> givenResponse = new Response<>(

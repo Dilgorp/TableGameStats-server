@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import ru.dilgorp.java.stats.game.table.config.GeneratorsConfig;
 import ru.dilgorp.java.stats.game.table.config.MappersConfig;
 import ru.dilgorp.java.stats.game.table.config.RepositoriesConfig;
 import ru.dilgorp.java.stats.game.table.config.TestConfig;
@@ -26,7 +27,7 @@ import static ru.dilgorp.java.stats.game.table.response.ResponseType.SUCCESS;
 /**
  * Класс для тестирования {@link UsersController}
  */
-@SpringJUnitConfig({RepositoriesConfig.class, TestConfig.class, MappersConfig.class})
+@SpringJUnitConfig({TestConfig.class, RepositoriesConfig.class, GeneratorsConfig.class, MappersConfig.class})
 class UsersControllerTest {
 
     @Autowired
@@ -60,7 +61,7 @@ class UsersControllerTest {
      * Проверяем, что список пользователей возвращается корректный
      */
     @Test
-    public void getUsersIsCorrect(){
+    public void getUsersIsCorrect() {
         // given
         Collection<AppUser> givenUsers = userGenerator.generate(3);
         appUserRepository.saveAll(givenUsers);
@@ -81,7 +82,7 @@ class UsersControllerTest {
      * Проверяем, что пользователь добавляется корректно
      */
     @Test
-    public void postUserIsCorrect(){
+    public void postUserIsCorrect() {
         // given
         UserDTO givenUser = userGenerator.generateDTO(1).get(0);
         Response<UserDTO> givenResponse = new Response<>(
@@ -101,7 +102,7 @@ class UsersControllerTest {
      * Проверяем, что при попытке вставить уже имеющегося пользователя возвращается ошибка
      */
     @Test
-    public void postUserError(){
+    public void postUserError() {
         // given
         UserDTO givenUser = userGenerator.generateDTO(1).get(0);
         AppUser givenAppUser = mapper.toEntity(givenUser);
@@ -123,7 +124,7 @@ class UsersControllerTest {
      * Проверям, что возвращается корректный пользователь
      */
     @Test
-    public void getUserIsCorrect(){
+    public void getUserIsCorrect() {
         // given
         AppUser givenUser = userGenerator.generate(1).get(0);
         appUserRepository.save(givenUser);
@@ -144,7 +145,7 @@ class UsersControllerTest {
      * Проверяем, что при попытке получить пользователя по несущствующему id, возвращается ошибка
      */
     @Test
-    public void getUserError(){
+    public void getUserError() {
         // given
         UUID uuid = UUID.randomUUID();
         Response<UserDTO> givenResponse = new Response<>(
@@ -164,7 +165,7 @@ class UsersControllerTest {
      * Проверяем, что данные пользователя обновляются корректно
      */
     @Test
-    public void putUserIsCorrect(){
+    public void putUserIsCorrect() {
         // given
         UserDTO givenUser = userGenerator.generateDTO(1).get(0);
         AppUser givenAppUser = mapper.toEntity(givenUser);
@@ -187,7 +188,7 @@ class UsersControllerTest {
      * Проверяем, что при попытке обновить несуществующего пользователя, возвращается ошибка
      */
     @Test
-    public void putUserError(){
+    public void putUserError() {
         // given
         UserDTO givenUser = userGenerator.generateDTO(1).get(0);
         Response<UserDTO> givenResponse = new Response<>(
@@ -207,7 +208,7 @@ class UsersControllerTest {
      * Проверяем, что пользователь корректно удаляется
      */
     @Test
-    public void deleteUserIsCorrect(){
+    public void deleteUserIsCorrect() {
         // given
         AppUser givenUser = userGenerator.generate(1).get(0);
         appUserRepository.save(givenUser);
@@ -224,7 +225,7 @@ class UsersControllerTest {
      * Проверяем, что при попытке удалить несуществующего пользователя, возвращается ошибка
      */
     @Test
-    public void deleteUserError(){
+    public void deleteUserError() {
         // given
         AppUser givenUser = userGenerator.generate(1).get(0);
         Response<UserDTO> givenResponse = new Response<>(
