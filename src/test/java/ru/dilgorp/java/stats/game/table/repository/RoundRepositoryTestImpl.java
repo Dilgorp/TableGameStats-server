@@ -69,7 +69,8 @@ public class RoundRepositoryTestImpl implements RoundRepository {
 
     @Override
     public <S extends RoundEntity> S save(S entity) {
-        return (S) rounds.put(entity.getUuid(), entity);
+        rounds.put(entity.getUuid(), entity);
+        return (S) rounds.get(entity.getUuid());
     }
 
     @Override

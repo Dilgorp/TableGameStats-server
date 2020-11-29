@@ -61,7 +61,8 @@ public class MagicianRepositoryTestImpl implements MagicianRepository {
 
     @Override
     public <S extends MagicianEntity> S save(S entity) {
-        return (S) magicians.put(entity.getUuid(), entity);
+        magicians.put(entity.getUuid(), entity);
+        return (S) magicians.get(entity.getUuid());
     }
 
     @Override

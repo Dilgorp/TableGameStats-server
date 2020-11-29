@@ -69,7 +69,8 @@ public class MurderEventRepositoryTestImpl implements MurderEventRepository {
 
     @Override
     public <S extends MurderEventEntity> S save(S entity) {
-        return (S) events.put(entity.getUuid(), entity);
+        events.put(entity.getUuid(), entity);
+        return (S) events.get(entity.getUuid());
     }
 
     @Override
