@@ -143,7 +143,7 @@ class RoundDaoTest {
      * Проверяем, что возвращается корректный ответ по идентификатору
      */
     @Test
-    public void findByIdIsCorrect(){
+    public void findByIdIsCorrect() {
         // given
         Game game = gameGenerator.generate(1).get(0);
         roundRepository.saveAll(
@@ -162,8 +162,11 @@ class RoundDaoTest {
         assertEquals(Optional.empty(), emptyOptional);
     }
 
+    /**
+     * Проверяем, что раунд корректно удаляется по идентификатору
+     */
     @Test
-    public void deleteIsCorrect(){
+    public void deleteIsCorrect() {
         // given
         Game game = gameGenerator.generate(1).get(0);
         roundRepository.saveAll(
