@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.dilgorp.java.stats.game.table.bom.domain.entity.GameEntity;
 import ru.dilgorp.java.stats.game.table.bom.domain.entity.MagicianEntity;
 import ru.dilgorp.java.stats.game.table.bom.domain.entity.RoundEntity;
+import ru.dilgorp.java.stats.game.table.bom.domain.entity.RoundParticipantEntity;
 import ru.dilgorp.java.stats.game.table.bom.domain.entity.event.MurderEventEntity;
 import ru.dilgorp.java.stats.game.table.bom.domain.model.Magician;
 import ru.dilgorp.java.stats.game.table.bom.domain.model.Round;
@@ -21,6 +22,7 @@ public class RoundMapper implements MapperWithOwner<RoundEntity, Round, GameEnti
 
     private final MapperWithOwner<MurderEventEntity, MurderEvent, RoundEntity> murderEventMapper;
     private final Mapper<MagicianEntity, Magician> magicianMapper;
+    private final MapperWithOwner<RoundParticipantEntity, Magician, RoundEntity> participantsMapper;
 
     /**
      * Преобразовывает {@link Round} в {@link RoundEntity}
@@ -42,6 +44,7 @@ public class RoundMapper implements MapperWithOwner<RoundEntity, Round, GameEnti
         roundEntity.setStart(model.getStart());
         roundEntity.setStop(model.getStop());
         roundEntity.setMurders(murderEventMapper.modelsToEntities(model.getMurders(), roundEntity));
+        roundEntity.setParticipants(participantsMapper.modelsToEntities(model.getParticipants(), roundEntity));
         return roundEntity;
     }
 
@@ -63,6 +66,7 @@ public class RoundMapper implements MapperWithOwner<RoundEntity, Round, GameEnti
         round.setStop(entity.getStop());
         round.setWinner(magicianMapper.toModel(entity.getWinner()));
         round.setMurders(murderEventMapper.entitiesToModels(entity.getMurders()));
+        round.setParticipants(participantsMapper.entitiesToModels(entity.getParticipants()));
         return round;
     }
 }

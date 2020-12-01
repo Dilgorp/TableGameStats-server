@@ -19,4 +19,5 @@ public class Round {
     private Date stop;
     private Magician winner;
     private List<MurderEvent> murders;
+    private List<Magician> participants;
 }

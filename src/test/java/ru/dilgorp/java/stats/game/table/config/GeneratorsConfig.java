@@ -34,7 +34,7 @@ public class GeneratorsConfig {
 
     @Bean
     public RoundGenerator roundGenerator(){
-        return new RoundGenerator(murderEventGenerator());
+        return new RoundGenerator(murderEventGenerator(), magicianGenerator());
     }
 
     @Bean

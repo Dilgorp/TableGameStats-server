@@ -39,6 +39,10 @@ public interface MapperWithOwner<E, M, O> {
      * @return Список сущностей базы данных
      */
     default List<E> modelsToEntities(Collection<M> models, O owner) {
+        if (models == null) {
+            return null;
+        }
+
         return models.stream()
                 .map(m -> toEntity(m, owner)).collect(Collectors.toList());
     }
@@ -50,6 +54,10 @@ public interface MapperWithOwner<E, M, O> {
      * @return Список объектов модели
      */
     default List<M> entitiesToModels(Collection<E> entities) {
+        if (entities == null) {
+            return null;
+        }
+
         return entities.stream()
                 .map(this::toModel).collect(Collectors.toList());
     }

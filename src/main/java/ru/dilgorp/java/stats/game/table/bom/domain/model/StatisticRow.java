@@ -2,7 +2,8 @@ package ru.dilgorp.java.stats.game.table.bom.domain.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.dilgorp.java.stats.game.table.domain.Player;
+
+import java.util.UUID;
 
 /**
  * Строка статистики
@@ -10,17 +11,13 @@ import ru.dilgorp.java.stats.game.table.domain.Player;
 @Data
 @NoArgsConstructor
 public class StatisticRow {
-    private Player player;
     private int kills;
     private int deaths;
+    private int players;
+    private int games;
+    private int rounds;
 
-    private String gameId;
-    private String roundId;
-    private String magicianId;
-
-    public StatisticRow(Player player) {
-        this.player = player;
-        kills = 0;
-        deaths = 0;
-    }
+    private UUID gameUuid;
+    private UUID roundUuid;
+    private UUID magicianUuid;
 }

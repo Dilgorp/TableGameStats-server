@@ -33,6 +33,7 @@ public class RoundDao implements DaoWithOwner<Round, UUID, Game> {
 
     private final Dao<Magician, UUID> magicianDao;
     private final DaoWithOwner<MurderEvent, UUID, Round> murderEventDao;
+    private final DaoWithOwner<Magician, UUID, Round> participantDao;
 
     /**
      * Возвращает список раундов {@link Round} по игре {@link Game}
@@ -79,6 +80,11 @@ public class RoundDao implements DaoWithOwner<Round, UUID, Game> {
             // Сохраняем убийства и помещаем их в сохраненный раунд
             savedRound.setMurders(
                     murderEventDao.saveByOwner(round.getMurders(), savedRound)
+            );
+
+            // Сохраняем участников раунда и помещаем их в сохраненный раунд
+            savedRound.setParticipants(
+                    participantDao.saveByOwner(round.getParticipants(), round)
             );
 
             savedRounds.add(savedRound);
