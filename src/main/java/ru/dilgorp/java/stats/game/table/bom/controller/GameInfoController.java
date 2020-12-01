@@ -50,63 +50,63 @@ public class GameInfoController {
     /**
      * Возвращает статистику по игре
      *
-     * @param gameId идентификатор игры
+     * @param gameUuid идентификатор игры
      * @return Ответ, содержащий статистику по игре
      */
-    @GetMapping("/{id}")
-    public Response<List<StatisticRow>> getGameInfo(@PathVariable("id") String gameId) {
-        return new Response<>(SUCCESS, null, statisticManager.getGameInfo(gameId));
+    @GetMapping("/{uuid}")
+    public Response<List<StatisticRow>> getGameInfo(@PathVariable("uuid") UUID gameUuid) {
+        return new Response<>(SUCCESS, null, statisticManager.getGameInfo(gameUuid));
     }
 
     /**
      * Возвращает статистику по раунду игры
      *
-     * @param gameId  идентификатор игры
-     * @param roundId идентификатор раунда
+     * @param gameUuid  идентификатор игры
+     * @param roundUuid идентификатор раунда
      * @return Ответ, содержащий статистику по раунду
      */
-    @GetMapping("/{id}/round/{round_id}")
-    public Response<List<StatisticRow>> getRoundInfo(@PathVariable("id") String gameId, @PathVariable("round_id") String roundId) {
-        return new Response<>(SUCCESS, null, statisticManager.getRoundInfo(gameId, roundId));
+    @GetMapping("/{uuid}/round/{round_uuid}")
+    public Response<List<StatisticRow>> getRoundInfo(@PathVariable("uuid") UUID gameUuid, @PathVariable("round_uuid") UUID roundUuid) {
+        return new Response<>(SUCCESS, null, statisticManager.getRoundInfo(gameUuid, roundUuid));
     }
 
     /**
-     * Возвращает статистику по магу в игре
+     * Возвращает статистику по игроку в игре
      *
-     * @param gameId     идентификатор игры
-     * @param magicianId идентификатор мага
-     * @return Ответ, содержащий статистику по магу в игре
+     * @param gameUuid   идентификатор игры
+     * @param playerUuid идентификатор игрока
+     * @return Ответ, содержащий статистику по игроку в игре
      */
-    @GetMapping("/{id}/magician/{magician_id}")
-    public Response<List<StatisticRow>> getGameInfoByMagician(@PathVariable("id") String gameId, @PathVariable("magician_id") String magicianId) {
-        return new Response<>(SUCCESS, null, statisticManager.getGameInfoByMagician(gameId, magicianId));
+    @GetMapping("/{uuid}/player/{player_uuid}")
+    public Response<List<StatisticRow>> getGameInfoByPlayer(@PathVariable("uuid") UUID gameUuid, @PathVariable("player_uuid") UUID playerUuid) {
+        return new Response<>(SUCCESS, null, statisticManager.getGameInfoByPlayer(gameUuid, playerUuid));
     }
 
     /**
-     * Возвращает статистику по могу в раунде игры
+     * Возвращает статистику по игроку в раунде игры
      *
-     * @param gameId     идентификатор игры
-     * @param roundId    идентификатор раунда
-     * @param magicianId идентификатор мага
-     * @return Ответ, содержащий статистику мага в раунде игры
+     * @param gameUuid   идентификатор игры
+     * @param roundUuid  идентификатор раунда
+     * @param playerUuid идентификатор игрока
+     * @return Ответ, содержащий статистику игроку в раунде игры
      */
-    @GetMapping("/{id}/round/{round_id}/magician/{magician_id}")
-    public Response<List<StatisticRow>> getRoundInfoByMagician(
-            @PathVariable("id") String gameId,
-            @PathVariable("round_id") String roundId,
-            @PathVariable("magician_id") String magicianId
+    @GetMapping("/{id}/round/{round_id}/player/{player_uuid}")
+    public Response<List<StatisticRow>> getRoundInfoByPlayer(
+            @PathVariable("uuid") UUID gameUuid,
+            @PathVariable("round_uuid") UUID roundUuid,
+            @PathVariable("player_uuid") UUID playerUuid
     ) {
-        return new Response<>(SUCCESS, null, statisticManager.getRoundInfoByMagician(gameId, roundId, magicianId));
+        return new Response<>(SUCCESS, null, statisticManager.getRoundInfoByPlayer(gameUuid, roundUuid, playerUuid));
     }
 
     /**
      * Возвращает общую статистику игрока
      *
-     * @param playerId идентификатор игрока
+     * @param playerUuid идентификатор игрока
      * @return Ответ, содержащий статистику игрока
      */
-    @GetMapping("/common/{player_id}")
-    public Response<List<StatisticRow>> getPlayerInfo(@PathVariable("magician_id") String playerId) {
-        return new Response<>(SUCCESS, null, statisticManager.getPlayerInfo(playerId));
+    @GetMapping("/common/{player_uuid}")
+    public Response<List<StatisticRow>> getPlayerInfo(@PathVariable("player_uuid") UUID playerUuid) {
+        return new Response<>(SUCCESS, null, statisticManager.getPlayerInfo(playerUuid));
     }
 }

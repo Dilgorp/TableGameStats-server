@@ -2,10 +2,7 @@ package ru.dilgorp.java.stats.game.table.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.dilgorp.java.stats.game.table.bom.repository.GameRepository;
-import ru.dilgorp.java.stats.game.table.bom.repository.MagicianRepository;
-import ru.dilgorp.java.stats.game.table.bom.repository.MurderEventRepository;
-import ru.dilgorp.java.stats.game.table.bom.repository.RoundRepository;
+import ru.dilgorp.java.stats.game.table.bom.repository.*;
 import ru.dilgorp.java.stats.game.table.repository.*;
 
 @Configuration
@@ -39,5 +36,10 @@ public class RepositoriesConfig {
     @Bean
     public GameRepository gameRepository(){
         return new GameRepositoryTestImpl();
+    }
+
+    @Bean
+    public ParticipantRepository participantRepository(){
+        return new ParticipantRepositoryTestImpl();
     }
 }

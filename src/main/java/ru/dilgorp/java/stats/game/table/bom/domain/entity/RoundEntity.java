@@ -32,4 +32,7 @@ public class RoundEntity extends EntityWithOwner<GameEntity> {
 
     @OneToMany(mappedBy = "owner")
     private List<MurderEventEntity> murders;
+
+    @OneToMany(mappedBy = "owner")
+    private List<RoundParticipantEntity> participants;
 }

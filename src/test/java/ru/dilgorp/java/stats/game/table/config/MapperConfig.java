@@ -5,11 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import ru.dilgorp.java.stats.game.table.bom.domain.entity.GameEntity;
 import ru.dilgorp.java.stats.game.table.bom.domain.entity.MagicianEntity;
 import ru.dilgorp.java.stats.game.table.bom.domain.entity.RoundEntity;
+import ru.dilgorp.java.stats.game.table.bom.domain.entity.RoundParticipantEntity;
 import ru.dilgorp.java.stats.game.table.bom.domain.entity.event.MurderEventEntity;
-import ru.dilgorp.java.stats.game.table.bom.domain.mapper.GameMapper;
-import ru.dilgorp.java.stats.game.table.bom.domain.mapper.MagicianMapper;
-import ru.dilgorp.java.stats.game.table.bom.domain.mapper.MurderEventMapper;
-import ru.dilgorp.java.stats.game.table.bom.domain.mapper.RoundMapper;
+import ru.dilgorp.java.stats.game.table.bom.domain.mapper.*;
 import ru.dilgorp.java.stats.game.table.bom.domain.model.Game;
 import ru.dilgorp.java.stats.game.table.bom.domain.model.Magician;
 import ru.dilgorp.java.stats.game.table.bom.domain.model.Round;
@@ -32,11 +30,16 @@ public class MapperConfig {
 
     @Bean
     public MapperWithOwner<RoundEntity, Round, GameEntity> roundMapper(){
-        return new RoundMapper(murderEventMapper(), magicianMapper());
+        return new RoundMapper(murderEventMapper(), magicianMapper(), participantsMapper());
     }
 
     @Bean
     public Mapper<GameEntity, Game> gameMapper(){
         return new GameMapper(roundMapper(), magicianMapper());
+    }
+
+    @Bean
+    public MapperWithOwner<RoundParticipantEntity, Magician, RoundEntity> participantsMapper(){
+        return new ParticipantsMapper(magicianMapper());
     }
 }

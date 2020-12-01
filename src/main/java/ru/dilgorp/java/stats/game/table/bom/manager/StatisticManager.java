@@ -3,6 +3,7 @@ package ru.dilgorp.java.stats.game.table.bom.manager;
 import ru.dilgorp.java.stats.game.table.bom.domain.model.StatisticRow;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Менеджер, отвечающий за формирование статистики
@@ -19,44 +20,44 @@ public interface StatisticManager {
     /**
      * Возвращает статистику игры
      *
-     * @param gameId идентификатор игры
+     * @param gameUuid идентификатор игры
      * @return список строк статистики игры
      */
-    List<StatisticRow> getGameInfo(String gameId);
+    List<StatisticRow> getGameInfo(UUID gameUuid);
 
     /**
      * Возвращает статистику раунда игры
      *
-     * @param gameId  идентификатор игры
-     * @param roundId идентификатор раунда
+     * @param gameUuid  идентификатор игры
+     * @param roundUuid идентификатор раунда
      * @return список строк статистики раунда игры
      */
-    List<StatisticRow> getRoundInfo(String gameId, String roundId);
+    List<StatisticRow> getRoundInfo(UUID gameUuid, UUID roundUuid);
 
     /**
-     * Возвращает статистку мага в игре
+     * Возвращает статистку игрока в игре
      *
-     * @param gameId     идентификатор игры
-     * @param magicianId идентификатор мага
-     * @return список строк статистики мага в игре
+     * @param gameUuid   идентификатор игры
+     * @param playerUuid идентификатор игрока
+     * @return список строк статистики игрока в игре
      */
-    List<StatisticRow> getGameInfoByMagician(String gameId, String magicianId);
+    List<StatisticRow> getGameInfoByPlayer(UUID gameUuid, UUID playerUuid);
 
     /**
-     * Возвращает статистику мага в раунде игры
+     * Возвращает статистику игрока в раунде игры
      *
-     * @param gameId     идентификатор игры
-     * @param roundId    идентификатор раунда
-     * @param magicianId идентификатор мага
-     * @return список строк статистики мага в раунде игры
+     * @param gameUuid   идентификатор игры
+     * @param roundUuid  идентификатор раунда
+     * @param playerUuid идентификатор игрока
+     * @return список строк статистики игрока в раунде игры
      */
-    List<StatisticRow> getRoundInfoByMagician(String gameId, String roundId, String magicianId);
+    List<StatisticRow> getRoundInfoByPlayer(UUID gameUuid, UUID roundUuid, UUID playerUuid);
 
     /**
      * Возвращает общую статистику игрока
      *
-     * @param playerId идентификатор игрока
+     * @param playerUuid идентификатор игрока
      * @return спискок строк статистики игрока
      */
-    List<StatisticRow> getPlayerInfo(String playerId);
+    List<StatisticRow> getPlayerInfo(UUID playerUuid);
 }

@@ -10,6 +10,8 @@ import ru.dilgorp.java.stats.game.table.bom.domain.entity.RoundEntity;
 import ru.dilgorp.java.stats.game.table.bom.domain.model.Game;
 import ru.dilgorp.java.stats.game.table.bom.domain.model.Magician;
 import ru.dilgorp.java.stats.game.table.bom.domain.model.Round;
+import ru.dilgorp.java.stats.game.table.bom.repository.MurderEventRepository;
+import ru.dilgorp.java.stats.game.table.bom.repository.ParticipantRepository;
 import ru.dilgorp.java.stats.game.table.bom.repository.RoundRepository;
 import ru.dilgorp.java.stats.game.table.config.*;
 import ru.dilgorp.java.stats.game.table.dao.Dao;
@@ -48,6 +50,8 @@ class RoundDaoTest {
     private GameGenerator gameGenerator;
     @Autowired
     private MurderEventDao murderEventDao;
+    @Autowired
+    private ParticipantDao participantDao;
 
     private RoundDao roundDao;
 
@@ -58,7 +62,8 @@ class RoundDaoTest {
                 gameMapper,
                 roundMapper,
                 magicianDao,
-                murderEventDao
+                murderEventDao,
+                participantDao
         );
     }
 

@@ -12,9 +12,14 @@ import java.util.UUID;
 public class RoundGenerator {
 
     private final MurderEventGenerator murderEventGenerator;
+    private final MagicianGenerator magicianGenerator;
 
-    public RoundGenerator(MurderEventGenerator murderEventGenerator) {
+    public RoundGenerator(
+            MurderEventGenerator murderEventGenerator,
+            MagicianGenerator magicianGenerator
+    ) {
         this.murderEventGenerator = murderEventGenerator;
+        this.magicianGenerator = magicianGenerator;
     }
 
     /**
@@ -29,6 +34,7 @@ public class RoundGenerator {
             Round round = new Round();
             round.setUuid(UUID.randomUUID());
             round.setMurders(murderEventGenerator.generate(3));
+            round.setParticipants(magicianGenerator.generate(2));
             rounds.add(round);
         }
         return rounds;
