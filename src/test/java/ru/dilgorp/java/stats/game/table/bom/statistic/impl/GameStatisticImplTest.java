@@ -21,7 +21,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Класс для тестирования {@link GameStatistic}
+ * Класс для тестирования {@link GameStatisticImpl}
  */
 @SpringJUnitConfig({
         TestConfig.class,

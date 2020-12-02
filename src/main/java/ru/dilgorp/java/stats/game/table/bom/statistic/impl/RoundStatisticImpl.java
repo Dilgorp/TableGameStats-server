@@ -49,10 +49,12 @@ public class RoundStatisticImpl implements RoundStatistic {
 
             setRoundStatistic(players, round.getUuid(), statisticRow);
 
+            statisticRows.add(statisticRow);
+
             players.clear();
         }
 
-        return null;
+        return statisticRows;
     }
 
     /**
