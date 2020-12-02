@@ -30,22 +30,16 @@ public class GameStatisticImpl implements GameStatistic {
     @Override
     public StatisticRow getCommonInfo() {
         Set<Player> players = new HashSet<>();
-        int gamesCount = 0;
-        int roundsCount = 0;
 
         StatisticRow statisticRow = new StatisticRow();
-        List<Game> games = gameDao.findAll();
-        for (Game game : games) {
+        gameDao.findAll().forEach(game -> {
             List<Round> rounds = game.getRounds();
-            roundsCount += rounds.size();
-
-            gamesCount++;
+            statisticRow.setRounds(statisticRow.getRounds() + rounds.size());
+            statisticRow.setGames(statisticRow.getGames() + 1);
             statisticManager.addRoundStatistic(statisticRow, players, rounds);
-        }
+        });
 
         statisticRow.setPlayers(players.size());
-        statisticRow.setGames(gamesCount);
-        statisticRow.setRounds(roundsCount);
         return statisticRow;
     }
 
@@ -66,11 +60,7 @@ public class GameStatisticImpl implements GameStatistic {
             List<Round> rounds = game.getRounds();
 
             statisticManager.addRoundStatistic(statisticRow, players, rounds);
-
-            statisticRow.setPlayers(players.size());
-            statisticRow.setGames(1);
-            statisticRow.setRounds(rounds.size());
-            statisticRow.setGameUuid(game.getUuid());
+            setGameStatistic(players, statisticRow, rounds, game.getUuid());
             statisticRows.add(statisticRow);
 
             players.clear();
@@ -98,11 +88,20 @@ public class GameStatisticImpl implements GameStatistic {
         Game game = byId.get();
         statisticManager.addRoundStatistic(statisticRow, players, game.getRounds());
 
-        statisticRow.setPlayers(players.size());
-        statisticRow.setGames(1);
-        statisticRow.setRounds(game.getRounds().size());
-        statisticRow.setGameUuid(gameUuid);
+        setGameStatistic(players, statisticRow, game.getRounds(), gameUuid);
 
         return statisticRow;
+    }
+
+    private void setGameStatistic(
+            Set<Player> players,
+            StatisticRow statisticRow,
+            List<Round> rounds,
+            UUID uuid
+    ) {
+        statisticRow.setPlayers(players.size());
+        statisticRow.setGames(1);
+        statisticRow.setRounds(rounds.size());
+        statisticRow.setGameUuid(uuid);
     }
 }
