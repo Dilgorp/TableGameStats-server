@@ -25,13 +25,12 @@ public class StatisticManagerImpl implements StatisticManager {
      */
     @Override
     public void addRoundStatistic(StatisticRow statisticRow, Set<Player> players, List<Round> rounds) {
-        int kills = 0;
-        for (Round round : rounds) {
-            kills += round.getMurders().size();
+        rounds.forEach(round -> {
+            int kills = round.getMurders().size();
+            statisticRow.setKills(statisticRow.getKills() + kills);
+            statisticRow.setDeaths(statisticRow.getKills());
             copyPlayers(players, round);
-        }
-        statisticRow.setKills(statisticRow.getKills() + kills);
-        statisticRow.setDeaths(statisticRow.getKills());
+        });
     }
 
     private void copyPlayers(Set<Player> players, Round round) {
