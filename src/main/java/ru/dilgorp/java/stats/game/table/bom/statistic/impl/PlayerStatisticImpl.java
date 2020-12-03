@@ -66,7 +66,7 @@ public class PlayerStatisticImpl implements PlayerStatistic {
     public List<StatisticRow> forRound(UUID roundUuid) {
         Map<Player, StatisticRow> statistic = new HashMap<>();
 
-        Optional<Round> byId = roundDao.findById(UUID.randomUUID());
+        Optional<Round> byId = roundDao.findById(roundUuid);
         if(byId.isEmpty()){
             return getStatisticResult(statistic);
         }
